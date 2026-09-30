@@ -1,12 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import Home from '@/app/page';
+import HomePage from '@/app/page';
 
-describe('Home', () => {
-  it('대표 제목을 보여 준다', () => {
-    render(<Home />);
+describe('HomePage', () => {
+  it('소개와 프로젝트 진입 링크를 제공한다', () => {
+    render(<HomePage />);
     expect(
-      screen.getByRole('heading', { level: 1, name: '360° Virtual Tour Portfolio' }),
+      screen.getByRole('heading', {
+        level: 1,
+        name: '지도와 360도 경험을 만드는 프론트엔드 개발자',
+      }),
     ).toBeInTheDocument();
+    const projects = screen.getByRole('region', { name: '프로젝트' });
+    expect(within(projects).getByRole('link', { name: 'Nadir 360' })).toHaveAttribute(
+      'href',
+      '/projects/nadir-360',
+    );
+    expect(screen.getByRole('region', { name: '경력' })).toBeInTheDocument();
   });
 });

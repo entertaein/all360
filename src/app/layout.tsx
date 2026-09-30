@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { env } from '@/env';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -13,8 +14,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Nadir 360',
-  description: '지도 기반 360도 가상투어',
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
+  title: { default: 'Nadir 360', template: '%s | Nadir 360' },
+  description: '지도와 360° 경험을 만드는 프론트엔드 개발자의 포트폴리오',
+  openGraph: {
+    title: 'Nadir 360',
+    description: '지도 기반 360° 가상투어 포트폴리오',
+    type: 'website',
+    locale: 'ko_KR',
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
